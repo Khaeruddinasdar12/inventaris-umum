@@ -7,7 +7,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="{{ asset('gentella/images/logoKDCW.png') }}" type="image/ico" />
+  <link rel="icon" href="{{ asset('makassar.png') }}" type="image/ico" />
   <!-- <meta name="csrf-token" content="@csrf" > -->
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -42,7 +42,7 @@
       <div class="col-md-3 left_col menu_fixed">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
-            <a href="" class="site_title"><img src="{{ asset('gentella/images/header-logo.png') }}" alt="KeDai" width="200"></a>
+            <a href="" class="site_title"><img src="{{ asset('makassar.png') }}" alt="KeDai" width="200"></a>
           </div>
 
           <div class="clearfix"></div>
@@ -128,7 +128,7 @@
     <!-- footer content -->
     <footer>
       <div class="pull-right">
-        Inventaris - KeDai Computerworks
+        Inventaris - {{config('app.name')}}
       </div>
       <div class="clearfix"></div>
     </footer>

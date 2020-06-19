@@ -3,7 +3,7 @@
 @section('content')
 		<!-- home -->
 		<div class="text-center">
-			<img src="{{ asset('gentella/images/logoKDCW.png') }}" alt="KeDai Computerworks" class="logos">
+			<img src="{{ asset('makassar.png') }}" alt="KeDai Computerworks" class="logos">
 			<h3 class="text-header">{{config('app.name')}}</h3>
 		</div>
 		<!-- akhir home -->

@@ -1,7 +1,7 @@
 <?php $__env->startSection('content'); ?>
 		<!-- home -->
 		<div class="text-center">
-			<img src="<?php echo e(asset('gentella/images/logoKDCW.png')); ?>" alt="KeDai Computerworks" class="logos">
+			<img src="<?php echo e(asset('makassar.png')); ?>" alt="KeDai Computerworks" class="logos">
 			<h3 class="text-header"><?php echo e(config('app.name')); ?></h3>
 		</div>
 		<!-- akhir home -->
