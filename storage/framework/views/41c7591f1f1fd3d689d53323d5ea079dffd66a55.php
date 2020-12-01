@@ -7,32 +7,32 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="{{ asset('makassar.png') }}" type="image/ico" />
-  <!-- <meta name="csrf-token" content="@csrf" > -->
-  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <link rel="icon" href="<?php echo e(asset('makassar.png')); ?>" type="image/ico" />
+  <!-- <meta name="csrf-token" content="<?php echo csrf_field(); ?>" > -->
+  <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
 
-  <title>{{config('app.name')}}</title>
+  <title><?php echo e(config('app.name')); ?></title>
 
   <!-- Bootstrap -->
-  <link href="{{ asset('gentella/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="<?php echo e(asset('gentella/css/bootstrap.min.css')); ?>" rel="stylesheet">
   <!-- Font Awesome -->
-  <link href="{{ asset('gentella/css/font-awesome.min.css') }}" rel="stylesheet">
+  <link href="<?php echo e(asset('gentella/css/font-awesome.min.css')); ?>" rel="stylesheet">
   <!-- NProgress -->
-  <link href="{{ asset('gentella/css/nprogress.css') }}" rel="stylesheet">
+  <link href="<?php echo e(asset('gentella/css/nprogress.css')); ?>" rel="stylesheet">
   <!-- iCheck -->
-  <link href="{{ asset('gentella/css/green.css') }}" rel="stylesheet">
+  <link href="<?php echo e(asset('gentella/css/green.css')); ?>" rel="stylesheet">
 
   <!-- bootstrap-progressbar -->
-  <link href="{{ asset('gentella/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+  <link href="<?php echo e(asset('gentella/css/bootstrap-progressbar-3.3.4.min.css')); ?>" rel="stylesheet">
   <!-- JQVMap -->
-  <!-- <link href="{{ asset('gentella/css/dist/jqvmap.min.css') }}" rel="stylesheet" /> -->
+  <!-- <link href="<?php echo e(asset('gentella/css/dist/jqvmap.min.css')); ?>" rel="stylesheet" /> -->
   <!-- bootstrap-daterangepicker -->
-  <link href="{{ asset('gentella/css/daterangepicker.css') }}" rel="stylesheet">
+  <link href="<?php echo e(asset('gentella/css/daterangepicker.css')); ?>" rel="stylesheet">
 
   <!-- Custom Theme Style -->
-  <link href="{{ asset('gentella/css/custom.min.css') }}" rel="stylesheet">
-  <link rel="stylesheet" href="{{ asset('gentella/css/style.css') }}">
-  <link rel="stylesheet" href="{{ asset('gentella/css/sweetalert2.min.css') }}">
+  <link href="<?php echo e(asset('gentella/css/custom.min.css')); ?>" rel="stylesheet">
+  <link rel="stylesheet" href="<?php echo e(asset('gentella/css/style.css')); ?>">
+  <link rel="stylesheet" href="<?php echo e(asset('gentella/css/sweetalert2.min.css')); ?>">
 </head>
 
 
@@ -43,7 +43,7 @@
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
             <a href="" class="site_title aps-title">
-                <img src="{{ asset('logo1.png') }}" alt="logo aps sidebar">
+                <img src="<?php echo e(asset('logo1.png')); ?>" alt="logo aps sidebar">
                 <span>AngkasaPura Support</span>
             </a>
           </div>
@@ -53,11 +53,11 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="{{ asset('gentella/images/img.jpg') }}" alt="..." class="img-circle profile_img">
+              <img src="<?php echo e(asset('gentella/images/img.jpg')); ?>" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
-              <h2>{{ Auth::user()->name }}</h2>
+              <h2><?php echo e(Auth::user()->name); ?></h2>
             </div>
           </div>
           <!-- /menu profile quick info -->
@@ -69,16 +69,16 @@
             <div class="menu_section">
               <h3>General</h3>
               <ul class="nav side-menu">
-                <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Home </a></li>
-                <li><a href="{{route('data-barang.index')}}"><i class="fa fa-edit"></i> Data Barang </a>
+                <li><a href="<?php echo e(route('home')); ?>"><i class="fa fa-home"></i> Home </a></li>
+                <li><a href="<?php echo e(route('data-barang.index')); ?>"><i class="fa fa-edit"></i> Data Barang </a>
                 </li>
                 <li><a><i class="fa fa-desktop"></i> Tansaksi <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
-                    <li><a href="{{route('peminjaman.index')}}">Peminjaman</a></li>
-                    <li><a href="{{route('pernahpinjam')}}">Data Barang Yang Pernah Di Pinjam</a></li>
+                    <li><a href="<?php echo e(route('peminjaman.index')); ?>">Peminjaman</a></li>
+                    <li><a href="<?php echo e(route('pernahpinjam')); ?>">Data Barang Yang Pernah Di Pinjam</a></li>
                   </ul>
                 </li>
-                <li><a href="{{route('user.index')}}"><i class="fa fa-child"></i> User </a></li>
+                <li><a href="<?php echo e(route('user.index')); ?>"><i class="fa fa-child"></i> User </a></li>
               </ul>
             </div>
 
@@ -99,7 +99,8 @@
               <li class="">
                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
                   aria-expanded="false">
-                  <img src="{{ asset('gentella/images/img.jpg') }}" alt="">{{ Auth::user()->name }}
+                  <img src="<?php echo e(asset('gentella/images/img.jpg')); ?>" alt=""><?php echo e(Auth::user()->name); ?>
+
                   <span class=" fa fa-angle-down"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -107,8 +108,8 @@
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
           <i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                   <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
+                   <form id="logout-form" action="<?php echo e(route('logout')); ?>" method="POST" style="display: none;">
+                                        <?php echo csrf_field(); ?>
                                     </form>
 
                 </ul>
@@ -122,7 +123,7 @@
 
       <!-- page content -->
       <div class="right_col" role="main">
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
 
       </div>
       <!-- /page content -->
@@ -131,7 +132,8 @@
     <!-- footer content -->
     <footer>
       <div class="pull-right">
-        Inventaris - {{config('app.name')}}
+        Inventaris - <?php echo e(config('app.name')); ?>
+
       </div>
       <div class="clearfix"></div>
     </footer>
@@ -214,58 +216,58 @@
   </script>
 
   <!-- jQuery -->
-  <script src="{{ asset('gentella/js/jquery.min.js') }}"></script>
-  <!-- <script src="{{ asset('js/jquery.js') }}"></script> -->
+  <script src="<?php echo e(asset('gentella/js/jquery.min.js')); ?>"></script>
+  <!-- <script src="<?php echo e(asset('js/jquery.js')); ?>"></script> -->
   <!-- Bootstrap -->
-  <!-- <script src="{{ asset('js/app.js') }}"></script> -->
-  <script src="{{ asset('gentella/js/bootstrap.min.js') }}"></script>
+  <!-- <script src="<?php echo e(asset('js/app.js')); ?>"></script> -->
+  <script src="<?php echo e(asset('gentella/js/bootstrap.min.js')); ?>"></script>
   <!-- FastClick -->
-  <script src="{{ asset('gentella/js/fastclick.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/fastclick.js')); ?>"></script>
   <!-- NProgress -->
-  <script src="{{ asset('gentella/js/nprogress.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/nprogress.js')); ?>"></script>
   <!-- Chart.js -->
-  <script src="{{ asset('gentella/js/Chart.min.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/Chart.min.js')); ?>"></script>
   <!-- gauge.js -->
-  <script src="{{ asset('gentella/js/gauge.min.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/gauge.min.js')); ?>"></script>
   <!-- bootstrap-progressbar -->
-  <script src="{{ asset('gentella/js/bootstrap-progressbar.min.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/bootstrap-progressbar.min.js')); ?>"></script>
   <!-- iCheck -->
-  <script src="{{ asset('gentella/js/icheck.min.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/icheck.min.js')); ?>"></script>
   <!-- Skycons -->
-  <script src="{{ asset('gentella/js/skycons.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/skycons.js')); ?>"></script>
   <!-- Flot -->
-  <script src="{{ asset('gentella/js/jquery.flot.js') }}"></script>
-  <script src="{{ asset('gentella/js/jquery.flot.pie.js') }}"></script>
-  <script src="{{ asset('gentella/js/jquery.flot.time.js') }}"></script>
-  <script src="{{ asset('gentella/js/jquery.flot.stack.js') }}"></script>
-  <script src="{{ asset('gentella/js/jquery.flot.resize.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.flot.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.flot.pie.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.flot.time.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.flot.stack.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.flot.resize.js')); ?>"></script>
   <!-- Flot plugins -->
-  <script src="{{ asset('gentella/js/jquery.flot.orderBars.js') }}"></script>
-  <script src="{{ asset('gentella/js/jquery.flot.spline.min.js') }}"></script>
-  <script src="{{ asset('gentella/js/curvedLines.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.flot.orderBars.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.flot.spline.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/curvedLines.js')); ?>"></script>
   <!-- DateJS -->
-  <script src="{{ asset('gentella/js/date.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/date.js')); ?>"></script>
   <!-- JQVMap -->
-  <script src="{{ asset('gentella/js/jquery.vmap.js') }}"></script>
-  <script src="{{ asset('gentella/js/jquery.vmap.world.js') }}"></script>
-  <script src="{{ asset('gentella/js/jquery.vmap.sampledata.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.vmap.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.vmap.world.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.vmap.sampledata.js')); ?>"></script>
   <!-- bootstrap-daterangepicker -->
-  <script src="{{ asset('gentella/js/moment.min.js') }}"></script>
-  <script src="{{ asset('gentella/js/daterangepicker.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/moment.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/daterangepicker.js')); ?>"></script>
 
   <!-- Custom Theme Scripts -->
-  <script src="{{ asset('gentella/js/custom.min.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/custom.min.js')); ?>"></script>
   <!-- datatable -->
-  <script src="{{ asset('gentella/js/jquery.dataTables.min.js') }}"></script>
-  <script src="{{ asset('gentella/js/dataTables.bootstrap.min.js') }}"></script>
-  <script src="{{ asset('gentella/js/dataTables.buttons.min.js') }}"></script>
-  <script src="{{ asset('gentella/js/buttons.bootstrap.min.js') }}"></script>
-  <script src="{{ asset('gentella/js/buttons.flash.min.js') }}"></script>
-  <script src="{{ asset('gentella/js/buttons.html5.min.js') }}"></script>
-  <script src="{{ asset('gentella/js/buttons.print.min.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/jquery.dataTables.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/dataTables.bootstrap.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/dataTables.buttons.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/buttons.bootstrap.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/buttons.flash.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/buttons.html5.min.js')); ?>"></script>
+  <script src="<?php echo e(asset('gentella/js/buttons.print.min.js')); ?>"></script>
 
   <!-- sweet alert -->
-  <script src="{{ asset('gentella/js/sweetalert2.all.min.js') }}"></script>
+  <script src="<?php echo e(asset('gentella/js/sweetalert2.all.min.js')); ?>"></script>
 
 
 

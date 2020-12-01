@@ -59,7 +59,7 @@ class User extends Controller
     public function store(Request $request)
     {
         $validasi = $this->validate($request, [
-            'noreg'     => 'required|unique:users|min:14|max:14',
+            // 'noreg'     => 'required|unique:users|min:14|max:14',
             'phone'     => 'required|unique:users|min:12|max:14',
             'password'  => 'required|string|min:6',
             'email'     => 'required|unique:users|max:255',
@@ -70,7 +70,7 @@ class User extends Controller
         $datauser->email     = $request->email;
         $datauser->roles     = $request->role;
         $datauser->phone     = $request->phone;
-        $datauser->noreg     = $request->noreg;
+        // $datauser->noreg     = $request->noreg;
         $datauser->password  = Hash::make($request['password']);
         $datauser->save();
         return $arrayName = array('status' => 'success' , 'pesan' => 'Berhasil Menambah Data User' );

@@ -17,7 +17,7 @@ Route::Resource('peminjaman', 'Transaksi');
 // Route::post('simpan', 'DataBarang@store');
 
 Route::get('user', 'User@index')->name('user.index');
-Route::get('cekstok/{id}', 'Databarang@cekstok');
+Route::get('cekstok/{id}', 'DataBarang@cekstok');
 Route::get('tableuser', 'User@tableuser')->name('tableuser');
 Route::group(['middleware' => 'App\Http\Middleware\SuperAdminMiddleware'], function() {
 	Route::post('registrasi', 'User@store')->name('registrasi');
