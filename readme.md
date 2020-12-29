@@ -10,7 +10,7 @@ Kebutuhan
 * Composer
 
 1. Download atau clone aplikasi ini.
-2. Akses foldernya di cmd atau terminal lalu ketikkan ```composer install``` (koneksi internet).
+2. Akses foldernya di cmd atau terminal lalu ketikkan ```composer install``` atau ```composer update```(koneksi internet).
 3. Ubah nama file ```.env.example``` menjadi ```.env```
 4. buat database di phpmyadmin, lalu buka file .env pada no. 3
 5. ubah
