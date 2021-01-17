@@ -1,9 +1,7 @@
-@extends('layouts.template')
-
-@section('content')
-@php 
+<?php $__env->startSection('content'); ?>
+<?php 
   $roles = Auth::user()->roles;
-@endphp
+?>
 
     <div class="col-md-12 col-sm-12 col-xs-12">
           <div class="x_panel">
@@ -103,7 +101,7 @@
         "order": [[ 0, 'asc' ]],
         "aLengthMenu": [[5, 10, 50],[ 5, 10, 50]],
         "ajax":  {
-                "url":  '{{route("tablepernahpinjam")}}', // URL file untuk proses select datanya
+                "url":  '<?php echo e(route("tablepernahpinjam")); ?>', // URL file untuk proses select datanya
                 "type": "GET"
               },
         "columns": [
@@ -123,4 +121,5 @@
       </script>
 
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

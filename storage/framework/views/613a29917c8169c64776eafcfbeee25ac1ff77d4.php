@@ -1,6 +1,4 @@
-@extends('layouts.template')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
@@ -43,7 +41,7 @@
         <h4 class="modal-title">Tambah Data Barang</h4>
       </div>
       <form id="insertdata" method="POST" enctype="multipart/form-data" >
-        @csrf
+        <?php echo csrf_field(); ?>
         <div class="modal-body">  
           <div class="form-group" style="width: 100%;">
             <label for="nama" class="control-label">Kode Barang :</label>
@@ -101,7 +99,7 @@ aria-hidden="true">
       <h4 class="modal-title">Edit Data Barang</h4>
     </div>
     <form method="POST" enctype="multipart/form-data" id="form-edit">
-      @csrf
+      <?php echo csrf_field(); ?>
         <div class="modal-body"><!-- 
           <div class="form-group" style="width: 100%;">
             <label for="kodbar" class="control-label" style="padding-top: 10px;" id="kode">Kode Barang
@@ -163,7 +161,7 @@ aria-hidden="true">
 
   function tablebarang() {
     $.ajax({
-    	url: '{{ route("tablebarang") }}',
+    	url: '<?php echo e(route("tablebarang")); ?>',
     	success:function(data){
     		// console.log(data);
     		$('#tablebarang').html(data);
@@ -182,7 +180,7 @@ aria-hidden="true">
   	}
 
     var request = new FormData(this);
-    var endpoint= '{{ route("data-barang.store") }}';
+    var endpoint= '<?php echo e(route("data-barang.store")); ?>';
     $.ajax({
       url: endpoint,
       method: "POST",
@@ -327,7 +325,7 @@ aria-hidden="true">
       "order": [[ 0, 'asc' ]],
       "aLengthMenu": [[5, 10, 50],[ 5, 10, 50]],
       "ajax":  {
-                "url":  '{{route("tablebarang")}}', // URL file untuk proses select datanya
+                "url":  '<?php echo e(route("tablebarang")); ?>', // URL file untuk proses select datanya
                 "type": "GET"
               },
               "columns": [
@@ -363,4 +361,5 @@ aria-hidden="true">
     })
   });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

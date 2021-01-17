@@ -1,6 +1,4 @@
-@extends('layouts.template')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="col-md-12 col-sm-12 col-xs-12">
   <div class="x_panel">
@@ -42,15 +40,15 @@
         <h4 class="modal-title">Tambah Data Barang</h4>
       </div>
       <form id="input_peminjaman" method="POST" enctype="multipart/form-data">
-        @csrf
+        <?php echo csrf_field(); ?>
         <div class="modal-body">
           <div class="form-group" style="width: 100%;">
             <label for="kondisi" class="control-label">Pilih Barang Yang Akan Di Pinjamkan</label>
             <select name="kode_barang" class="form-control" id="kdbarang" onchange="stok()" required>
               <option value="" disabled selected>-- daftar barang --</option>
-              @foreach($data as $datas)
-              <option value="{{$datas->id}}">{{$datas->nama}}</option>
-              @endforeach
+              <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $datas): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              <option value="<?php echo e($datas->id); ?>"><?php echo e($datas->nama); ?></option>
+              <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </select>
           </div>
           <div class="form-group" style="width: 100%;">
@@ -96,7 +94,7 @@ aria-hidden="true">
       <h4 class="modal-title">Kembalikan Barang</h4>
     </div>
     <form id="kembalikan_barang" method="POST" enctype="multipart/form-data">
-      @csrf
+      <?php echo csrf_field(); ?>
       <div class="modal-body">
         <div class="form-group" style="width: 100%;">
           <label for="nama" class="control-label">Nama Peminjam :</label>
@@ -165,8 +163,8 @@ aria-hidden="true">
   $('#input_peminjaman').submit(function(e){
     e.preventDefault();
     var request = new FormData(this);
-    // var endpoint= '{{ route("data-barang.store") }}';
-    var endpoint= '{{ route("peminjaman.store") }}';
+    // var endpoint= '<?php echo e(route("data-barang.store")); ?>';
+    var endpoint= '<?php echo e(route("peminjaman.store")); ?>';
     $.ajax({
       url: endpoint,
       method: "POST",
@@ -208,7 +206,7 @@ aria-hidden="true">
       "order": [[ 0, 'asc' ]],
       "aLengthMenu": [[5, 10, 50],[ 5, 10, 50]],
       "ajax":  {
-                "url":  '{{route("tablepeminjaman")}}', // URL file untuk proses select datanya
+                "url":  '<?php echo e(route("tablepeminjaman")); ?>', // URL file untuk proses select datanya
                 "type": "GET"
               },
               "columns": [
@@ -346,4 +344,5 @@ aria-hidden="true">
   }
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.template', \Illuminate\Support\Arr::except(get_defined_vars(), array('__data', '__path')))->render(); ?>

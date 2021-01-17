@@ -15,6 +15,7 @@ class CreateDatabarangsTable extends Migration
     {
         Schema::create('databarangs', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('kode')->unique();
             $table->string('nama');
             $table->string('kondisi');
             $table->integer('jumlah');

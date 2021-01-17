@@ -62,12 +62,14 @@ class DataBarang extends Controller
     public function store(Request $request)
     {
         $validasi = $this->validate($request, [
-            'foto' => 'image|mimes:jpeg,png,jpg|max:3072',
+            'kode' => 'required|string',
+            'foto' => 'mimes:jpeg,png,jpg|max:3072',
             'jumlah' => 'numeric|min:1',
             'stok' => 'numeric|min:1'
         ]);
         
         $databarang = new \App\Databarang;
+        $databarang->kode       = $request->kode;
         $databarang->nama       = $request->nama;
         $databarang->kondisi    = $request->kondisi;
         $databarang->jumlah     = $request->jumlah;

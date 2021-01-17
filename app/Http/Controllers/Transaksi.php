@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DB;
 use DataTables;
 use Carbon\Carbon;
+use Auth;
 class Transaksi extends Controller
 {
     public function __construct()
@@ -23,8 +24,8 @@ class Transaksi extends Controller
     {
         $data = DB::table('peminjamans')
                 ->join('users', 'users.id', '=', 'peminjamans.created_by')
-                ->join('databarangs', 'databarangs.id', '=', 'peminjamans.kode_barang')
-                ->select('peminjamans.*', 'users.name as namaadmin', 'databarangs.nama', 'databarangs.foto')
+                ->join('databarangs', 'databarangs.id', '=', 'peminjamans.barang_id')
+                ->select('peminjamans.*', 'users.name as namaadmin', 'databarangs.nama', 'databarangs.kode as kode_barang')
                 ->whereNull('peminjamans.tanggal_kembali')
                 ->get();
                 // return json_encode($data);
@@ -42,10 +43,10 @@ class Transaksi extends Controller
                     <i class='fa fa-trash'></i>
                 </button>";
         })
-        ->editColumn('foto', function ($data) {
-          return '<img src="storage/'.$data->foto.'"  width="90px">' ;
+        ->editColumn('foto_awal', function ($data) {
+          return '<img src="storage/'.$data->foto_awal.'"  width="90px">' ;
         })
-        ->rawColumns(['foto','action'])
+        ->rawColumns(['foto_awal','action'])
         ->make(true);
     }
 
@@ -64,6 +65,10 @@ class Transaksi extends Controller
 
     public function store(Request $request)
     {
+        $validasi = $this->validate($request, [
+            'foto' => 'mimes:jpeg,png,jpg|max:3072'
+        ]);
+
         $id = $request->kode_barang;
         $cek = \App\Databarang::where('id', '=', $id)->pluck('stok')->first();
         // $hasil = json_encode($cek);
@@ -77,7 +82,14 @@ class Transaksi extends Controller
         $update_barang->save();
 
         $data = new \App\Peminjaman;
-        $data->kode_barang    = $request->kode_barang;
+        // return $arrayName = array('status' => 'success' , 'pesan' => 'here' );
+        $dokumentasi = $request->file('foto'); // foto barang saat dikembalikan
+        if($dokumentasi) {
+            $dokumentasi_path = $dokumentasi->store('dokumentasi', 'public');
+            $data->foto_awal = $dokumentasi_path;
+        }
+        // return $arrayName = array('status' => 'success' , 'pesan' => 'here' );
+        $data->barang_id      = $request->kode_barang;
         $data->peminjam       = $request->peminjam;
         $data->kondisi        = 'Layak Pakai';
         $data->jumlah         = $request->jumlah;
@@ -94,7 +106,7 @@ class Transaksi extends Controller
     public function edit($id)
     {
         $data = DB::table('peminjamans')
-                ->join('databarangs', 'databarangs.id', '=', 'peminjamans.kode_barang')
+                ->join('databarangs', 'databarangs.id', '=', 'peminjamans.barang_id')
                 ->select('peminjamans.kondisi', 'peminjamans.peminjam', 'peminjamans.id', 'databarangs.nama')
                 ->where('peminjamans.id', '=', $id)
                 ->first();
@@ -114,8 +126,8 @@ class Transaksi extends Controller
         $data = DB::table('peminjamans')
                 ->join('users', 'users.id', '=', 'peminjamans.created_by')
                 // ->join('users', 'users.id', '=', 'peminjamans.accepted_by')
-                ->join('databarangs', 'databarangs.id', '=', 'peminjamans.kode_barang')
-                ->select('peminjamans.*', 'users.name as namaadmin', 'databarangs.nama', 'databarangs.foto')
+                ->join('databarangs', 'databarangs.id', '=', 'peminjamans.barang_id')
+                ->select('peminjamans.*', 'users.name as namaadmin', 'databarangs.nama', 'databarangs.kode as kode_barang')
                 ->whereNotNull('peminjamans.tanggal_kembali')
                 ->get();
         // return $data;
@@ -130,23 +142,33 @@ class Transaksi extends Controller
                     <i class='fa fa-trash'></i>
                 </button>";
         })
-        ->editColumn('foto', function ($data) {
-          return '<img src="storage/'.$data->foto.'"  width="90px">' ;
+        ->editColumn('foto_kembali', function ($data) {
+          return '<img src="storage/'.$data->foto_kembali.'"  width="90px">' ;
         })
-        ->rawColumns(['foto', 'action'])
+        ->rawColumns(['foto_kembali', 'action'])
         ->make(true);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id) // kembalikan barang
     {
+        $validasi = $this->validate($request, [
+            'foto' => 'mimes:jpeg,png,jpg|max:3072'
+        ]);
+
         $data_peminjaman = \App\Peminjaman::findOrfail($id);
-                $id_barang   = $data_peminjaman->kode_barang;
+                $id_barang   = $data_peminjaman->barang_id;
                 $stok_pinjam = $data_peminjaman->jumlah;
 
         $update_barang = \App\Databarang::findOrfail($id_barang);
         $update_barang->stok = $update_barang->stok +  $stok_pinjam;
         $update_barang->kondisi = $request->kondisi;
         $update_barang->save();
+
+        $dokumentasi = $request->file('foto'); // foto barang saat dikembalikan
+        if($dokumentasi) {
+            $dokumentasi_path = $dokumentasi->store('dokumentasi', 'public');
+            $data_peminjaman->foto_kembali = $dokumentasi_path;
+        }
 
         $data_peminjaman->tanggal_kembali     = Carbon::now();
         $data_peminjaman->accepted_by       = \Auth::user()->name;
@@ -158,7 +180,7 @@ class Transaksi extends Controller
     public function destroy($id)
     {
         $data = \App\Peminjaman::findOrfail($id);
-        $id_barang  = $data->kode_barang;
+        $id_barang  = $data->barang_id;
         $stok_pinjam= $data->jumlah;
 
         $update_barang = \App\Databarang::findOrfail($id_barang);
